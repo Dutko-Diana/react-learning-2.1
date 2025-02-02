@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import './App.module.css';
+import toast, { Toaster } from 'react-hot-toast';
+import { UserMenu } from './components/UserMenu';
 // export default function App() {
 //   const handleClick = () => {
 //     return alert(
@@ -176,7 +178,7 @@ import './App.module.css';
 
 //------------------------------------------------------------------------
 
-import { useId } from 'react';
+// import { useId } from 'react';
 
 // const MyComponent = () => {
 //   const id = useId();
@@ -372,38 +374,214 @@ import { useId } from 'react';
 
 //---------------------------------------------------------------------------------
 
-import { useEffect } from 'react';
-import axios from 'axios';
+// import { useEffect } from 'react';
+// import axios from 'axios';
+// import { BulletList } from 'react-content-loader';
+// import { fetchArticlesWithTopic } from './articles-api';
+// import SearchForm from './components/SearchForm';
+
+// const MyBulletListLoader = () => <BulletList />;
+
+// const ArticleList = ({ items }) => {
+//   console.log(items);
+
+//   return (
+//     <ul>
+//       {items.map(({ objectID, url, title }) => {
+//         return (
+//           title && (
+//             <li key={objectID}>
+//               <a href={url} target="_blank" rel="noopener noreferrer">
+//                 {title}
+//               </a>
+//             </li>
+//           )
+//         );
+//       })}
+//     </ul>
+//   );
+// };
+
+// const App = () => {
+//   const [articles, setArticles] = useState([]);
+//   const [loading, setLoading] = useState(false);
+//   const [error, setError] = useState(false);
+
+//   const handleSearch = async topic => {
+//     try {
+//       setArticles([]);
+//       setLoading(true);
+//       setError(false);
+//       const data = await fetchArticlesWithTopic(topic);
+//       setArticles(data);
+//     } catch {
+//       setError(true);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <h1>Latest articles</h1>
+//       <SearchForm onSearch={handleSearch} />
+//       {articles.length > 0 && <ArticleList items={articles} />}
+//       {loading && MyBulletListLoader()}
+//       {error && (
+//         <p>Whoops, something went wrong! Please try reloading this page!</p>
+//       )}
+//       <Toaster />
+//     </div>
+//   );
+// };
+
+// export default App;
+
+//--------------------------------------------------------------------------------------
+
+// import { useMemo } from 'react';
+
+// const App = () => {
+//   const [countries, setCountries] = useState([
+//     'OAE',
+//     'Italy',
+//     'Switzerland',
+//     'Ukraine',
+//     'Japan',
+//   ]);
+//   const [query, setQuery] = useState('i');
+//   const [flightClass, setFlightClass] = useState('economy');
+
+//   const filteredCountries = useMemo(
+//     () =>
+//       countries.filter(country =>
+//         country.toLowerCase().includes(query.toLowerCase())
+//       ),
+//     [countries, query]
+//   );
+
+//   return (
+//     <div>
+//       <select
+//         name="class"
+//         id="123"
+//         required
+//         onChange={e => setFlightClass(e.target.value)}
+//       >
+//         <option value="economy">Economy</option>
+//         <option value="business">Business</option>
+//         <option value="first">First</option>
+//         <option value="private">Private flight</option>
+//       </select>
+//       <ul>
+//         {filteredCountries.map(planet => (
+//           <li key={planet}>{planet}</li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// };
+
+// export default App;
+
+//---------------------------------------------------------------------------------
+
+// import { useRef } from 'react';
+
+// const App = () => {
+//   const [value, setValue] = useState('');
+//   const btnRef = useRef();
+
+//   console.log('app:', btnRef.current);
+
+//   useEffect(() => {
+//     console.log('useEfect:', btnRef.current);
+//   });
+
+//   const handleClick = () => {
+//     console.log('handleClick', btnRef.current);
+//   };
+
+//   return (
+//     <div>
+//       <button onClick={() => setValue(value + 1)}>Rerender</button>
+//       <button ref={btnRef} onClick={handleClick}>
+//         Button with ref
+//       </button>
+//       ;
+//     </div>
+//   );
+// };
+
+//---------------------------------
+
+// import { useRef } from 'react';
+
+// const App = () => {
+//   const valueRef = useRef(0);
+
+//   useEffect(() => {
+//     // Виконається лише один раз під час монтування.
+//     // Наступні оновлення значення рефа не
+//     // викличуть оновлення компонента
+//     console.log(valueRef.current);
+//   });
+
+//   const handleClick = () => {
+//     valueRef.current += 1;
+//   };
+
+//   return <button onClick={handleClick}>Click to update ref value </button>;
+// };
+
+//------------------------------------------------------------
+
+// const Player = ({ source }) => {
+//   const playerRef = useRef();
+
+//   const play = () => playerRef.current.play();
+
+//   const pause = () => playerRef.current.pause();
+
+//   return (
+//     <div>
+//       <video src={source} ref={playerRef}>
+//         Sorry, your browser does not support embedded videos.
+//       </video>
+//       <div>
+//         <button onClick={play}>Play</button>
+//         <button onClick={pause}>Pause</button>
+//       </div>
+//     </div>
+//   );
+// };
+
+// const App = () => {
+//   return <Player source="http://media.w3.org/2010/05/sintel/trailer.mp4" />;
+// };
+
+//--------------------------------------------------
+
+// const CustomButton = forwardRef((props, ref) => (
+//   <button ref={ref}>{props.children}</button>
+// ));
+
+// CustomButton.displayName = 'CustomButton';
+
+// function App() {
+//   const btnRef = useRef();
+
+//   useEffect(() => btnRef.current.focus(), []);
+
+//   return <CustomButton ref={btnRef}>Button with forwarded ref</CustomButton>;
+// }
+
+//-------------------------------------------------------
 
 const App = () => {
-  const [articles, setArticles] = useState([]);
-
-  useEffect(() => {
-    async function fetchArticles() {
-      const res = await axios.get(
-        'https://hn.algolia.com/api/v1/search?query=react'
-      );
-      console.log(res.data.hits);
-      setArticles(res.data.hits);
-    }
-
-    fetchArticles();
-  }, []);
-
   return (
     <div>
-      <h1>Latest articles</h1>
-      {articles.length > 0 && (
-        <ul>
-          {articles.map(({ objectID, url, title }) => (
-            <li key={objectID}>
-              <a href={url} target="_blank" rel="noreferrer noopener">
-                {title}
-              </a>
-            </li>
-          ))}
-        </ul>
-      )}
+      <UserMenu />
     </div>
   );
 };
