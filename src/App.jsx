@@ -2,6 +2,8 @@ import { forwardRef, useEffect, useRef, useState } from 'react';
 import './App.module.css';
 import toast, { Toaster } from 'react-hot-toast';
 import { UserMenu } from './components/UserMenu';
+import { NavLink, Route, Routes } from 'react-router-dom';
+import clsx from 'clsx';
 // export default function App() {
 //   const handleClick = () => {
 //     return alert(
@@ -578,10 +580,42 @@ import { UserMenu } from './components/UserMenu';
 
 //-------------------------------------------------------
 
+// const App = () => {
+//   return (
+//     <div>
+//       <UserMenu />
+//     </div>
+//   );
+// };
+
+//-----------------------------------------------------------------
+
+import css from './App.module.css';
+
+const buildLinkClass = ({ isActive }) => {
+  return clsx(css.link, isActive && css.active);
+};
+
 const App = () => {
   return (
     <div>
-      <UserMenu />
+      <nav>
+        <NavLink to="/" className={buildLinkClass}>
+          Home
+        </NavLink>
+        <NavLink to="/about" className={buildLinkClass}>
+          About
+        </NavLink>
+        <NavLink to="/products" className={buildLinkClass}>
+          Products
+        </NavLink>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </div>
   );
 };
